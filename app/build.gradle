@@ -1,0 +1,177 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: "kotlin-allopen"
+
+allOpen {
+    // allows mocking for classes w/o directly opening them for release builds
+    annotation 'com.mustafa.tandem.testing.OpenClass'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.mustafa.tandem"
+        minSdkVersion 16
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "com.mustafa.tandem.util.TandemTestRunner"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            testCoverageEnabled true
+            debuggable true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    buildFeatures {
+        dataBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
+    }
+    lintOptions {
+        lintConfig rootProject.file('lint.xml')
+    }
+}
+
+dependencies {
+
+    def androidxVersion = '1.0.0'
+    def appCompatVersion = '1.1.0'
+    def androidFragment = '1.2.5'
+    def recyclerVersion = '1.1.0'
+    def ankoVersion = '0.10.8'
+    def archComponentVersion = '2.1.0'
+    def lifecycleVersion = '2.2.0'
+    def daggerVersion = '2.29.1'
+    def retrofitVersion = '2.9.0'
+    def googleJsonVersion = '2.8.6'
+    def timberVersion = '4.7.1'
+    def glideVersion = '4.11.0'
+    def glidePaletteVersion = '2.1.2'
+    def mockitoKotlinVersion = '2.2.0'
+    def junitVersion = '4.13.1'
+    def espressoVersion = '3.2.0'
+    def nav_version = '2.3.1'
+    def coroutinesVersion = '1.3.9'
+    def okHttpVersion = '4.9.0'
+    def coreTestingVersion = '2.1.0'
+    def androidxTestRules = '1.2.0'
+
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+
+
+    // support library
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation 'androidx.activity:activity-ktx:1.1.0'
+    implementation "androidx.fragment:fragment-ktx:$androidFragment"
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation "androidx.palette:palette-ktx:$androidxVersion"
+    implementation "androidx.recyclerview:recyclerview:$recyclerVersion"
+    implementation "androidx.constraintlayout:constraintlayout:2.0.2"
+
+    // kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.anko:anko:$ankoVersion"
+
+    // debugging
+    implementation "com.jakewharton.timber:timber:$timberVersion"
+
+
+    // coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+
+    // architecture components
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+
+
+    // navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // dependency injection
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+
+    debugImplementation "androidx.fragment:fragment-testing:$androidFragment"
+
+    // network
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    implementation "com.google.code.gson:gson:$googleJsonVersion"
+
+    // glide
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    implementation "com.github.florent37:glidepalette:$glidePaletteVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+
+
+    // unit test
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
+    testImplementation "androidx.arch.core:core-testing:$archComponentVersion"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
+
+    // Android test
+
+    //Core Library
+    androidTestImplementation "androidx.test:core:1.2.0"
+
+    androidTestImplementation "androidx.test.ext:junit:1.1.2"
+    androidTestImplementation 'androidx.test.ext:truth:1.3.0'
+    androidTestImplementation 'com.google.truth:truth:1.0'
+
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+
+
+    androidTestImplementation "androidx.test:rules:1.2.0"
+    androidTestImplementation "androidx.test:runner:1.2.0"
+    androidTestImplementation "org.mockito:mockito-android:3.3.3"
+    androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
+    // we need all open to run tests which  a we enable only for debug builds.
+    project.tasks.whenTaskAdded {
+        if (it.name == "testReleaseUnitTest") {
+            it.enabled = false
+        }
+    }
+
+}
