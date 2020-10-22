@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:snackBar="@{vm.membersListLiveData}"
             tools:listitem="@layout/member_item" />
-<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+
         <ProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
