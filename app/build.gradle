@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId "com.mustafa.tandem"
-        minSdkVersion 16
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -61,7 +61,7 @@ dependencies {
     def androidFragment = '1.2.5'
     def recyclerVersion = '1.1.0'
     def ankoVersion = '0.10.8'
-    def archComponentVersion = '2.1.0'
+    def archTestVersion = '2.1.0'
     def lifecycleVersion = '2.2.0'
     def daggerVersion = '2.29.1'
     def retrofitVersion = '2.9.0'
@@ -71,12 +71,13 @@ dependencies {
     def glidePaletteVersion = '2.1.2'
     def mockitoKotlinVersion = '2.2.0'
     def junitVersion = '4.13.1'
-    def espressoVersion = '3.2.0'
+    def espressoVersion = '3.3.0'
     def nav_version = '2.3.1'
     def coroutinesVersion = '1.3.9'
     def okHttpVersion = '4.9.0'
-    def coreTestingVersion = '2.1.0'
-    def androidxTestRules = '1.2.0'
+    def androidxTestCoreVersion = '1.3.0'
+    def mockitoAndroid = '3.3.3'
+    def junitRunnerVersion = '1.6.2'
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -113,7 +114,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
-    implementation 'androidx.appcompat:appcompat:1.2.0'
 
 
     // navigation
@@ -128,6 +128,8 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
     debugImplementation "androidx.fragment:fragment-testing:$androidFragment"
+    debugImplementation "androidx.test:core:$androidxTestCoreVersion"
+    debugImplementation "androidx.test:monitor:$androidxTestCoreVersion"
 
     // network
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
@@ -144,30 +146,35 @@ dependencies {
     // unit test
     testImplementation "junit:junit:$junitVersion"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
-    testImplementation "androidx.arch.core:core-testing:$archComponentVersion"
+    testImplementation "androidx.arch.core:core-testing:$archTestVersion"
     testImplementation "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
+    testImplementation "org.junit.platform:junit-platform-runner:$junitRunnerVersion"
 
     // Android test
 
     //Core Library
-    androidTestImplementation "androidx.test:core:1.2.0"
+    androidTestImplementation "androidx.test:core:$androidxTestCoreVersion"
 
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation "androidx.test:rules:1.3.0"
+    androidTestImplementation "androidx.test:runner:1.3.0"
+
+    // Assertions
     androidTestImplementation "androidx.test.ext:junit:1.1.2"
     androidTestImplementation 'androidx.test.ext:truth:1.3.0'
-    androidTestImplementation 'com.google.truth:truth:1.0'
+    androidTestImplementation 'com.google.truth:truth:1.1'
 
-    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+    androidTestImplementation "androidx.arch.core:core-testing:$archTestVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
 
-
-    androidTestImplementation "androidx.test:rules:1.2.0"
-    androidTestImplementation "androidx.test:runner:1.2.0"
-    androidTestImplementation "org.mockito:mockito-android:3.3.3"
+    androidTestImplementation "org.mockito:mockito-android:$mockitoAndroid"
     androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
-    // we need all open to run tests which  a we enable only for debug builds.
+
+
+    // we need all open to run tests, we enable only for debug builds.
     project.tasks.whenTaskAdded {
         if (it.name == "testReleaseUnitTest") {
             it.enabled = false
