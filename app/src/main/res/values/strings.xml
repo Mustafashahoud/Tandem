@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Community</string>
-    <string name="member_picture">Member Picture</string>
-    <string name="new_member">New member</string>
     <string name="native_word">NATIVE</string>
     <string name="learns_word">LEARNS</string>
     <string name="retry">Retry</string>

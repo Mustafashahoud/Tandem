@@ -16,7 +16,7 @@
         android:layout_height="150dp"
         android:layout_marginTop="1dp"
         android:layout_marginBottom="1dp"
-        android:background="@color/light_gray">
+        android:background="@color/colorPrimary">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/member_pic"
