@@ -10,9 +10,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
+import javax.inject.Singleton
 
 
 @OpenForTesting
+@Singleton
 class CommunityRepository @Inject constructor(
     private val service: TandemService,
     private val dispatcherIO: CoroutineDispatcher
@@ -21,7 +23,6 @@ class CommunityRepository @Inject constructor(
     @WorkerThread
     suspend fun getCommunityMembers(
         page: Int
-
     ): Flow<Resource<List<Member>>> {
         return flow {
             emit(Resource.loading(null))

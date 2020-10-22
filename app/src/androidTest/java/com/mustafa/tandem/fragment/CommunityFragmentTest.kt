@@ -79,7 +79,7 @@ class CommunityFragmentTest {
     }
 
     @Test
-    fun testBasics_ProgressBar_ToolbarTitle() {
+    fun testBasics_ProgressBar() {
         onView(withId(R.id.progress_bar))
             .check(matches(not(isDisplayed())))
 
@@ -106,7 +106,7 @@ class CommunityFragmentTest {
     }
 
     @Test
-    fun loadCommunityMember() {
+    fun loadCommunityMembers() {
 
         //Given
         val oldMemberList = MockTestUtil.createMembers(3)

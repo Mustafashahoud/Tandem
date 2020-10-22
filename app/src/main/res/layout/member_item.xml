@@ -16,19 +16,15 @@
         android:layout_height="150dp"
         android:layout_marginTop="1dp"
         android:layout_marginBottom="1dp"
-        android:background="@color/light_gray"
-        >
-<!--        android:background="@color/light_gray"-->
+        android:background="@color/light_gray">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/member_pic"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
-            android:layout_marginRight="7dp"
             android:layout_marginBottom="10dp"
             app:cardCornerRadius="14dp"
             app:cardElevation="0dp">
@@ -46,13 +42,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="3dp"
-            android:layout_marginLeft="3dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_toEndOf="@id/member_pic"
-            android:layout_toRightOf="@id/member_pic">
+            android:layout_toEndOf="@id/member_pic">
 
             <RelativeLayout
                 android:id="@+id/name_layout"
@@ -64,9 +57,7 @@
                     style="@style/TextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:text="@{member.firstName}"
                     tools:text="Mustafa" />
@@ -76,10 +67,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
                     app:visibilityByValue="@{member.referenceCnt}"
                     tools:ignore="RelativeOverlap"
                     tools:text="15" />
@@ -89,7 +78,6 @@
                     android:layout_width="40dp"
                     android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
@@ -129,7 +117,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="3dp"
-                        android:layout_marginRight="3dp"
                         android:text="@string/native_word"
                         tools:text="NATIVE" />
 
@@ -150,9 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toEndOf="@+id/native_layout"
-                    android:layout_toRightOf="@+id/native_layout">
+                    android:layout_toEndOf="@+id/native_layout">
 
                     <TextView
                         android:id="@+id/learns_word"
@@ -160,7 +145,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="3dp"
-                        android:layout_marginRight="3dp"
                         android:text="@string/learns_word"
                         tools:text="LEARNS" />
 

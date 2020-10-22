@@ -23,7 +23,7 @@ sealed class ApiResponse<out T> {
      * 2) ### Exception response e.g. network connection error
      */
     sealed class ApiFailureResponse<T> {
-        data class Error<T>(val response: Response<T>) : ApiResponse<T>() {}
+        data class Error<T>(val response: Response<T>) : ApiResponse<T>()
 
         data class Exception<T>(val exception: Throwable) : ApiResponse<T>() {
             val message: String? = exception.localizedMessage
@@ -44,7 +44,7 @@ sealed class ApiResponse<out T> {
         /**
          * ApiResponse Factory.
          *
-         * [f] Create [ApiResponse] from [retrofit2.Response] returning from the block.
+         * [create] Create [ApiResponse] from [retrofit2.Response] returning from the block.
          * If [retrofit2.Response] has no errors, it creates [ApiResponse.ApiSuccessResponse].
          * If [retrofit2.Response] has errors, it creates [ApiResponse.ApiFailureResponse.Error].
          * If [retrofit2.Response] has occurred exceptions, it creates [ApiResponse.ApiFailureResponse.Exception].

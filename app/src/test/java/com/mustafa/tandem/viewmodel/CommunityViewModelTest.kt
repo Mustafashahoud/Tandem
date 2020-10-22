@@ -13,7 +13,6 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runBlockingTest
@@ -29,7 +28,9 @@ import org.mockito.ArgumentMatchers.anyInt
 @ExperimentalCoroutinesApi
 class CommunityViewModelTest {
 
+    // Subject under test
     private lateinit var viewModel: CommunityViewModel
+
     private val repository: CommunityRepository = mock()
 
     @ExperimentalCoroutinesApi
@@ -70,7 +71,7 @@ class CommunityViewModelTest {
 
         verify(observer, times(2)).onChanged(resourceSuccess)
 
-        assertEquals(members, viewModel.membersListLiveData.value?.data)
+        assertThat(viewModel.membersListLiveData.value?.data, `is`(members))
 
         viewModel.membersListLiveData.removeObserver(observer)
     }
@@ -119,12 +120,11 @@ class CommunityViewModelTest {
 
         verify(observer).onChanged(resourceSuccess)
 
-        assertEquals(members.size, viewModel.membersListLiveData.value?.data?.size)
-        assertEquals(
-            members[0].firstName,
-            viewModel.membersListLiveData.value?.data?.get(0)?.firstName
+        assertThat(viewModel.membersListLiveData.value?.data?.size, `is`(members.size))
+        assertThat(
+            viewModel.membersListLiveData.value?.data?.get(0)?.firstName, `is`(members[0].firstName)
         )
-        assertEquals(members, viewModel.membersListLiveData.value?.data)
+        assertThat(viewModel.membersListLiveData.value?.data, `is`(members))
 
         // Or resourceSuccess.status
         assertThat(viewModel.membersListLiveData.value?.status, `is`(Status.SUCCESS))
@@ -158,7 +158,6 @@ class CommunityViewModelTest {
         assertThat(viewModel.membersListLiveData.value?.message, `is`(errorMessage))
 
         viewModel.membersListLiveData.removeObserver(observer)
-
     }
 
 }

@@ -23,8 +23,6 @@ class CommunityViewModel @Inject constructor(
         pageLiveData.postValue(1)
     }
 
-//    val recipesLiveDataPrivate = MutableLiveData<Resource<List<Member>>>()
-//    val recipesLiveData: LiveData<Resource<List<Member>>> get() = recipesLiveDataPrivate
 
     val membersListLiveData = pageLiveData.switchMap { pageNumber ->
         liveData(viewModelScope.coroutineContext + dispatcherIO) {
@@ -32,16 +30,6 @@ class CommunityViewModel @Inject constructor(
             emitSource(members)
         }
     }
-//
-//    fun getMembers() {
-//        pageLiveData.map { pageNumber ->
-//            viewModelScope.launch {
-//                repository.getCommunityMembers(pageNumber).collect { it ->
-//                    recipesLiveDataPrivate.postValue(it)
-//                }
-//            }
-//        }
-//    }
 
 
     fun loadMore() {
@@ -54,9 +42,4 @@ class CommunityViewModel @Inject constructor(
             pageLiveData.value = it
         }
     }
-
-    fun setMembersPage(page: Int) {
-        pageLiveData.postValue(page)
-    }
-
 }

@@ -71,7 +71,7 @@ class CommunityFragment : Fragment(), Injectable {
         binding.membersRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.membersRecyclerView.adapter = adapter
         binding.membersRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//            var isScrolling = false
+            var isScrolling = true
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                 val lastPosition = layoutManager.findLastVisibleItemPosition()
@@ -79,9 +79,9 @@ class CommunityFragment : Fragment(), Injectable {
                     && viewModel.membersListLiveData.value?.status != Status.LOADING
                 ) {
                     viewModel.membersListLiveData.value?.let {
-                        if (!it.isLastPage ) {
+                        if (!it.isLastPage && isScrolling ) {
                             viewModel.loadMore()
-//                            isScrolling = false
+                            isScrolling = false
                         }
                     }
                 }
@@ -90,7 +90,7 @@ class CommunityFragment : Fragment(), Injectable {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-//                    isScrolling = true
+                    isScrolling = true
                 }
             }
         })

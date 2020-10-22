@@ -43,12 +43,6 @@ object BindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("visibleGone")
-    fun showHide1(view: View, show: Boolean) {
-        view.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    @JvmStatic
     @BindingAdapter("setNativeLanguage")
     fun bindNativeLanguage(textView: TextView, natives: List<String>?) {
         if (!natives.isNullOrEmpty()) {
@@ -63,19 +57,6 @@ object BindingAdapters {
             textView.text = learns[0].toUpperCase(Locale.ROOT)
         }
     }
-
-
-    @JvmStatic
-    @BindingAdapter("setReferenceCount")
-    fun bindReferenceCount(textView: TextView, value: Int?) {
-        value?.let {
-            if (value > 0) textView.text = value.toString()
-            else {
-                textView.visibility = View.INVISIBLE
-            }
-        }
-    }
-
 
     @JvmStatic
     @BindingAdapter("visibilityByValue")
