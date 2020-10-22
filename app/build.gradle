@@ -49,8 +49,20 @@ android {
         androidTest.java.srcDirs += "src/test-common/java"
         test.java.srcDirs += "src/test-common/java"
     }
+
+    testOptions.unitTests {
+        returnDefaultValues = true
+        all {
+            testLogging {
+                events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+            }
+        }
+    }
+
     lintOptions {
         lintConfig rootProject.file('lint.xml')
+        disable "UnsafeExperimentalUsageError",
+                "UnsafeExperimentalUsageWarning"
     }
 }
 
@@ -78,6 +90,7 @@ dependencies {
     def androidxTestCoreVersion = '1.3.0'
     def mockitoAndroid = '3.3.3'
     def junitRunnerVersion = '1.6.2'
+    def dataBindingCompilerVersion = '3.1.4'
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -101,6 +114,9 @@ dependencies {
 
     // debugging
     implementation "com.jakewharton.timber:timber:$timberVersion"
+
+    // dataBinding compiler
+    kapt "com.android.databinding:compiler:$dataBindingCompilerVersion"
 
 
     // coroutines
