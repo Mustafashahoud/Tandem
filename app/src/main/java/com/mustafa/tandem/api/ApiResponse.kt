@@ -22,7 +22,7 @@ sealed class ApiResponse<out T> {
      * 1) ### Error response e.g. server error
      * 2) ### Exception response e.g. network connection error
      */
-    sealed class ApiFailureResponse<T> {
+    sealed class ApiFailureResponse {
         data class Error<T>(val response: Response<T>) : ApiResponse<T>()
 
         data class Exception<T>(val exception: Throwable) : ApiResponse<T>() {

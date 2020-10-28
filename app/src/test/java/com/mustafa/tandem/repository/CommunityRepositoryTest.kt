@@ -10,6 +10,7 @@ import com.mustafa.tandem.model.CommunityResponse
 import com.mustafa.tandem.model.Member
 import com.mustafa.tandem.model.Resource
 import com.mustafa.tandem.model.Status
+import com.mustafa.tandem.room.MemberDao
 import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectIndexed
@@ -33,6 +34,8 @@ class CommunityRepositoryTest {
 
     private val service = mock<TandemService>()
 
+    private val memberDao = mock<MemberDao>()
+
     @ExperimentalCoroutinesApi
     @get:Rule
     var coroutinesRule = MainCoroutinesRule()
@@ -42,20 +45,22 @@ class CommunityRepositoryTest {
 
     @Before
     fun init() {
-        repository = CommunityRepository(service, coroutinesRule.testDispatcher)
+        repository = CommunityRepository(service, memberDao, coroutinesRule.testDispatcher)
     }
 
     @Test
     fun getCommunityMembers_onlyOneMember() = coroutinesRule.testDispatcher.runBlockingTest {
 
         val mockMember =
-            Member("Mustafa", listOf("SP", "HU"), listOf("EN", "DE"), "URL", 1, "TOPIC")
+            Member(1, 1, "Mustafa", listOf("SP", "HU"), listOf("EN", "DE"), "URL", 1, "TOPIC")
         val members = listOf(mockMember)
         val mockResponse = CommunityResponse(null, members, "success")
         val mockData = mockResponse.members
 
         val call = successCall(mockResponse)
         whenever(service.getCommunityMembers(1)).thenReturn(call)
+
+        whenever(memberDao.loadMembersByPages(listOf(1))).thenReturn(members)
 
         repository.getCommunityMembers(1).collectIndexed { index, resource ->
             if (index == 0) assertThat(resource.status, `is`(Status.LOADING))
@@ -89,6 +94,8 @@ class CommunityRepositoryTest {
 
         val call = successCall(mockResponse)
         whenever(service.getCommunityMembers(1)).thenReturn(call)
+
+        whenever(memberDao.loadMembersByPages(listOf(1))).thenReturn(mockMembers)
 
         repository.getCommunityMembers(1).collectIndexed { index, resource ->
             if (index == 0) assertThat(resource.status, `is`(Status.LOADING))

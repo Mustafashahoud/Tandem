@@ -1,7 +1,11 @@
 package com.mustafa.tandem.di
 
+import android.app.Application
 import androidx.annotation.NonNull
+import androidx.room.Room
 import com.mustafa.tandem.api.TandemService
+import com.mustafa.tandem.room.AppDatabase
+import com.mustafa.tandem.room.MemberDao
 import com.mustafa.tandem.util.ApiResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -20,6 +24,21 @@ class AppModule {
     @Singleton
     fun provideDispatcherIO(): CoroutineDispatcher {
         return Dispatchers.IO
+    }
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@NonNull application: Application): AppDatabase {
+        return Room
+            .databaseBuilder(application, AppDatabase::class.java, "Member.db")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMovieDao(@NonNull database: AppDatabase): MemberDao {
+        return database.memberDao()
     }
 
 

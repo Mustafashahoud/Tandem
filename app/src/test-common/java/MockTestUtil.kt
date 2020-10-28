@@ -5,7 +5,7 @@ class MockTestUtil {
 
         fun createMembers(count: Int): List<Member> {
             return (0 until count).map {
-                Member("Mustafa$it", listOf("DE$it"), listOf("EN$it"), "URL$it", it, "TOPIC$it")
+                Member(1, 1 ,"Mustafa$it", listOf("DE$it"), listOf("EN$it"), "URL$it", it, "TOPIC$it")
             }
         }
     }

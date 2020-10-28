@@ -1,4 +1,4 @@
-package com.mustafa.tandem.fragment
+package com.mustafa.tandem.ui
 
 import MockTestUtil
 import androidx.databinding.DataBindingComponent
@@ -146,8 +146,8 @@ class CommunityFragmentTest {
         onView(withId(R.id.progress_bar))
             .check(matches(not(isDisplayed())))
 
-        val newMember = Member("Mustafa", emptyList(), emptyList(), "URL", 0, "TOPIC")
-        val oldMember = Member("Mustafa", emptyList(), emptyList(), "URL", 10, "TOPIC")
+        val newMember = Member(1, 1, "Mustafa", emptyList(), emptyList(), "URL", 0, "TOPIC")
+        val oldMember = Member(1, 1, "Mustafa", emptyList(), emptyList(), "URL", 10, "TOPIC")
 
         results.postValue(Resource.success(listOf(newMember, oldMember), true))
 

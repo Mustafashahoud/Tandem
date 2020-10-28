@@ -19,7 +19,7 @@ import com.mustafa.tandem.di.Injectable
 import com.mustafa.tandem.model.Status
 import com.mustafa.tandem.util.RetryCallback
 import com.mustafa.tandem.util.autoCleared
-import com.mustafa.tandem.view.adapter.MembersListAdapter
+import com.mustafa.tandem.view.adapter.MemberListAdapter
 import javax.inject.Inject
 
 class CommunityFragment : Fragment(), Injectable {
@@ -31,7 +31,7 @@ class CommunityFragment : Fragment(), Injectable {
 
     private var binding by autoCleared<CommunityFragmentBinding>()
 
-    private var adapter by autoCleared<MembersListAdapter>()
+    private var adapter by autoCleared<MemberListAdapter>()
 
     private val viewModel by viewModels<CommunityViewModel> { viewModelFactory }
 
@@ -67,7 +67,7 @@ class CommunityFragment : Fragment(), Injectable {
     }
 
     private fun initRecyclerView() {
-        adapter = MembersListAdapter(dataBindingComponent = dataBindingComponent)
+        adapter = MemberListAdapter(dataBindingComponent = dataBindingComponent) {}
         binding.membersRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.membersRecyclerView.adapter = adapter
         binding.membersRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -79,7 +79,7 @@ class CommunityFragment : Fragment(), Injectable {
                     && viewModel.membersListLiveData.value?.status != Status.LOADING
                 ) {
                     viewModel.membersListLiveData.value?.let {
-                        if (!it.isLastPage && isScrolling ) {
+                        if (!it.isLastPage && isScrolling) {
                             viewModel.loadMore()
                             isScrolling = false
                         }
