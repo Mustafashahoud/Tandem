@@ -3,6 +3,7 @@ package com.mustafa.tandem.db
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mustafa.tandem.model.Member
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
@@ -17,7 +18,7 @@ class MemberDaoTest : DbTest() {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Test
-    fun insertAndRead() {
+    fun insertAndRead() = runBlocking {
         val mockMember =
             Member(
                 1,
