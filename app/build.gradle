@@ -68,11 +68,7 @@ android {
 
 dependencies {
 
-    def androidxVersion = '1.0.0'
-    def appCompatVersion = '1.1.0'
     def androidFragment = '1.2.5'
-    def recyclerVersion = '1.1.0'
-    def ankoVersion = '0.10.8'
     def archTestVersion = '2.1.0'
     def lifecycleVersion = '2.2.0'
     def daggerVersion = '2.29.1'
@@ -92,26 +88,19 @@ dependencies {
     def junitRunnerVersion = '1.6.2'
     def dataBindingCompilerVersion = '3.1.4'
     def roomVersion = '2.2.5'
+    def materialVersion = '1.2.1'
+    def constraintVersion = '2.0.4'
+    def appCompactVersion = '1.2.0'
 
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
-
-
     // support library
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation 'androidx.activity:activity-ktx:1.1.0'
-    implementation "androidx.fragment:fragment-ktx:$androidFragment"
-    implementation 'com.google.android.material:material:1.2.1'
-    implementation "androidx.palette:palette-ktx:$androidxVersion"
-    implementation "androidx.recyclerview:recyclerview:$recyclerVersion"
-    implementation "androidx.constraintlayout:constraintlayout:2.0.2"
+    implementation "androidx.appcompat:appcompat:$appCompactVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintVersion"
 
-    // kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "org.jetbrains.anko:anko:$ankoVersion"
 
     // debugging
     implementation "com.jakewharton.timber:timber:$timberVersion"
@@ -127,6 +116,7 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
 
     // architecture components
+    implementation "androidx.fragment:fragment-ktx:$androidFragment"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
@@ -134,6 +124,7 @@ dependencies {
 
     // Room
     implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
 
 
