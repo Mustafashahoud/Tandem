@@ -12,13 +12,10 @@ import kotlin.math.abs
 abstract class MemberDao {
 
     @Query("SELECT * FROM Member WHERE page in (:pages) order by page")
-    abstract fun loadMembersByPages(pages: List<Int>): List<Member>
+    abstract suspend fun loadMembersByPages(pages: List<Int>): List<Member>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertMemberList(members: List<Member>)
-
-    @Query("DELETE FROM Member")
-    abstract fun deleteAll()
+    abstract suspend fun insertMemberList(members: List<Member>)
 
     fun hashPrimary(firstName: String, refCnt: Int, page: Int, picUrl: String): Int {
         var hash = 7

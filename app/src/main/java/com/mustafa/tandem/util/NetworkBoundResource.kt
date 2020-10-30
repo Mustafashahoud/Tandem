@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.flowOn
  * Standalone Function For Single Source of Truth
  */
 inline fun <ResultType, RequestType> networkBoundResource(
-    crossinline loadFromDb: () -> ResultType?,
+    crossinline loadFromDb: suspend () -> ResultType?,
     crossinline fetchFromNetwork: suspend () -> ApiResponse<RequestType>,
     crossinline saveFetchResult: suspend (RequestType) -> Unit,
     crossinline shouldFetch: (ResultType?) -> Boolean = { true },
-    crossinline moviePagingChecker: (RequestType) -> Boolean = { true },
+    crossinline pagingChecker: (RequestType) -> Boolean = { true },
     dispatcherIO: CoroutineDispatcher
 ) = flow<Resource<ResultType>> {
     emit(Resource.loading(null))
@@ -25,7 +25,7 @@ inline fun <ResultType, RequestType> networkBoundResource(
             this.onSuccessSuspend {
                 this.data?.let {
                     saveFetchResult(it)
-                    emit(Resource.success(loadFromDb(), moviePagingChecker(it)))
+                    emit(Resource.success(loadFromDb(), pagingChecker(it)))
                 }
 
             }.onErrorSuspend {
