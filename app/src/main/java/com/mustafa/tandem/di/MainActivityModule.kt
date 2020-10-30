@@ -1,6 +1,6 @@
 package com.mustafa.tandem.di
 
-import com.mustafa.tandem.MainActivity
+import com.mustafa.tandem.view.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

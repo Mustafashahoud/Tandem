@@ -27,7 +27,7 @@ class CommunityRepository @Inject constructor(
             },
             fetchFromNetwork = { service.getCommunityMembers(page) },
             dispatcherIO = dispatcherIO,
-            moviePagingChecker = {
+            pagingChecker = {
                 it.members.size < 20
             },
             saveFetchResult = { items ->

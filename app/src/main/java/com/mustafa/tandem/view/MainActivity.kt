@@ -1,7 +1,8 @@
-package com.mustafa.tandem
+package com.mustafa.tandem.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.mustafa.tandem.R
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector

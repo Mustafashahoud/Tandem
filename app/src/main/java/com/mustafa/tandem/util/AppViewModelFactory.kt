@@ -1,4 +1,4 @@
-package com.mustafa.tandem.factory
+package com.mustafa.tandem.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

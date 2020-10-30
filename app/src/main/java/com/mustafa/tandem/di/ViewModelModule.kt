@@ -2,7 +2,7 @@ package com.mustafa.tandem.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.mustafa.tandem.factory.AppViewModelFactory
+import com.mustafa.tandem.util.AppViewModelFactory
 import com.mustafa.tandem.view.CommunityViewModel
 
 import dagger.Binds
