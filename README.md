@@ -5,6 +5,13 @@
 * Reactive UIs using LiveData observables and Data Binding.
 * It consists of one fragment which is fully tested by Espresso.
 
+### Branches
+|     Sample     | Description |
+| ------------- | ------------- |
+| [master](https://github.com/Mustafashahoud/Tandem/tree/master) | The base for the rest of the other branches. <br/>Uses Kotlin, Architecture Components, Coroutines + Flow, Dagger, Retrofit Data Binding, etc. |
+| [room-cache](https://github.com/Mustafashahoud/Tandem/tree/room-cache)| Same like master branch but it uses Room db for caching data implementing single source of truth|
+| [paging3-network-db-livedata](https://github.com/Mustafashahoud/Tandem/tree/paging3-network-db-livedata)| Added Paging3 library, It uses RemoteMediator with Room DAO + PagingSource as single source of truth|
+
 ## Libraries
 - 100% Kotlin
 - MVVM Architecture
@@ -16,7 +23,7 @@
 - [Mockito-kotlin](https://github.com/nhaarman/mockito-kotlin) for Junit mock test
 - [Espresso](https://developer.android.com/training/testing/espresso) for UI testing
 
-## MVVM (Model – View – ViewModel) 
+## MVVM (Model – View – ViewModel)
 is an architectural pattern in programming. The main task of the pattern is to separate presentation logic from business logic. The most important component in MVVM is the ViewModel, which behaves more like a model and less like a view. It is responsible for converting and delegating data objects to presentation logic that displays those objects to the user on the device screen.
 
 ![MVVM](https://user-images.githubusercontent.com/33812602/96825222-e81afa80-1430-11eb-8cc2-1025bb568ef3.PNG)
@@ -98,7 +105,7 @@ They're different tools with different strengths. Like a tank and a cannon, they
 -----------------------------
    - Coroutines: When we have concurrent tasks like you would fetch data from Remote service, database, any background processes, sure you can use RX in such cases too, but it looks like you use a tank to kill an ant.
    - RX-Kotlin: When you would to handle a stream of UI actions like user scrolling, clicks, update UI upon some events ... etc.
- 
+
  * #### What are the Coroutines benefits?
 -----------------------------
 
@@ -221,7 +228,7 @@ class CommunityViewModel @Inject constructor(
 * The ViewModel exposes ```membersListLiveData``` that is going to be observed by the UI My fragment and changing the UI accordingly with the Livedata changes (Recommended to exposes only LiveData not MutableLiveData (it should be used internally))
 * The way it works is when changing the value of ```pageLiveData```, ```repository.getCommunityMembers(pageNumber)``` will be called returning Flow that is going to be converted to LiveData.
 * The Most important thing here is that I am using ```viewModelScope``` which is using to launch the coroutines, and it will destroy it when the ViewModel is destroyed (onCleared() is called) with having to destroy it ourselves (Not like RX-Java and disposables)
- 
+
 * ### Fragment
 ------------------------
 
@@ -255,7 +262,7 @@ class CommunityViewModel @Inject constructor(
             }
         })
     }
-    
+
 ```
 * It is very important to pass ```viewLifecycleOwner``` as the LifeCycleOwner because when fragment gets detached it won't be destroyed but the ```onDestroyView``` gets called so here the Fragment survives and in case passing the fragment is LifeCycleOwner the observer will not be destroyed and we would have ```onChanged``` called twice.
 
@@ -271,7 +278,7 @@ The idea is that making kotlin classes open in our test build but also keep them
 	 */
 	@Target(AnnotationTarget.ANNOTATION_CLASS)
 	annotation class OpenClass
-	
+
 
 	/**
 	 * Annotate a class with [OpenForTesting] if you want it to be extendable in debug builds.
@@ -433,7 +440,7 @@ Finally, I just need to add @OpenForTesting for the classes I need to be open in
         onView(withId(com.google.android.material.R.id.snackbar_text))
             .check(matches(withText("ERROR")))
     }
-    
+
 ```
 
 ```
@@ -532,10 +539,10 @@ suspend fun getCommunityMembers(page: Int): LiveData<List<Member>> {
 Then in the ViewModel:
 
 ```
-val movieListLiveData = pageLiveData.switchMap { pageNumber ->
+val membersLiveData = pageLiveData.switchMap { pageNumber ->
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-            val movies = repository.getCommunityMembers(pageNumber)
-            emitSource(movies)
+            val members = repository.getCommunityMembers(pageNumber)
+            emitSource(members)
         }
     }
 ```
