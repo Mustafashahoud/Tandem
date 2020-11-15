@@ -4,16 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="callback"
-            type="com.mustafa.tandem.util.RetryCallback" />
-
-        <variable
-            name="vm"
-            type="com.mustafa.tandem.view.CommunityViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,48 +11,39 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/members_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="1dp"
+            android:scrollbars="vertical"
+            app:layoutManager="LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:snackBar="@{vm.membersListLiveData}"
             tools:listitem="@layout/member_item" />
 
         <ProgressBar
             android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="invisible"
-            app:showHideProgressbar="@{vm.membersListLiveData}"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button_retry"
+            android:id="@+id/retry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/retry"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:onClick="@{() -> callback.retry()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="invisible"
-            app:showHideRetry="@{vm.membersListLiveData}"/>
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

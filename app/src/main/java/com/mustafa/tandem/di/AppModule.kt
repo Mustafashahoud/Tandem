@@ -6,7 +6,6 @@ import androidx.room.Room
 import com.mustafa.tandem.api.TandemService
 import com.mustafa.tandem.room.AppDatabase
 import com.mustafa.tandem.room.MemberDao
-import com.mustafa.tandem.util.ApiResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineDispatcher
@@ -37,7 +36,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideMovieDao(@NonNull database: AppDatabase): MemberDao {
+    fun provideMemberDao(@NonNull database: AppDatabase): MemberDao {
         return database.memberDao()
     }
 
@@ -58,13 +57,13 @@ class AppModule {
             .client(okHttpClient)
             .baseUrl(TandemService.ENDPOINT)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(ApiResponseCallAdapterFactory())
+//            .addCallAdapterFactory(ApiResponseCallAdapterFactory())
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideDiscoverService(@NonNull retrofit: Retrofit): TandemService {
+    fun provideTandemService(@NonNull retrofit: Retrofit): TandemService {
         return retrofit.create(TandemService::class.java)
     }
 }

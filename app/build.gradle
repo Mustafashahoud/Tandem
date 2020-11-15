@@ -44,6 +44,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
     sourceSets {
         androidTest.java.srcDirs += "src/test-common/java"
@@ -73,6 +74,7 @@ dependencies {
     def lifecycleVersion = '2.2.0'
     def daggerVersion = '2.29.1'
     def retrofitVersion = '2.9.0'
+    def paging_version = "3.0.0-alpha09"
     def googleJsonVersion = '2.8.6'
     def timberVersion = '4.7.1'
     def glideVersion = '4.11.0'
@@ -87,7 +89,7 @@ dependencies {
     def mockitoAndroid = '3.3.3'
     def junitRunnerVersion = '1.6.2'
     def dataBindingCompilerVersion = '3.1.4'
-    def roomVersion = '2.2.5'
+    def roomVersion = '2.3.0-alpha03'
     def materialVersion = '1.2.1'
     def constraintVersion = '2.0.4'
     def appCompactVersion = '1.2.0'
@@ -126,6 +128,9 @@ dependencies {
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
+
+    // Paging 3 Library
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
 
     // navigation

@@ -1,106 +1,89 @@
 package com.mustafa.tandem.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.AbsListView
-import androidx.databinding.DataBindingComponent
-import androidx.databinding.DataBindingUtil
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.paging.LoadState
 import com.mustafa.tandem.R
-import com.mustafa.tandem.binding.FragmentDataBindingComponent
 import com.mustafa.tandem.databinding.CommunityFragmentBinding
 import com.mustafa.tandem.di.Injectable
-import com.mustafa.tandem.model.Status
-import com.mustafa.tandem.util.RetryCallback
-import com.mustafa.tandem.util.autoCleared
-import com.mustafa.tandem.view.adapter.MemberListAdapter
+import com.mustafa.tandem.view.adapter.LoadStateAdapter
+import com.mustafa.tandem.view.adapter.MembersAdapter
 import javax.inject.Inject
 
-class CommunityFragment : Fragment(), Injectable {
+class CommunityFragment : Fragment(R.layout.community_fragment), Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
+    private var _binding: CommunityFragmentBinding? = null
+    private val binding get() = _binding!!
 
-    private var binding by autoCleared<CommunityFragmentBinding>()
-
-    private var adapter by autoCleared<MemberListAdapter>()
+    private var pagingAdapter = MembersAdapter()
 
     private val viewModel by viewModels<CommunityViewModel> { viewModelFactory }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.community_fragment,
-            container,
-            false
-        )
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        with(binding) {
-            lifecycleOwner = this@CommunityFragment
-            vm = viewModel
-            callback = object : RetryCallback {
-                override fun retry() {
-                    viewModel.refresh()
-                }
+        _binding = CommunityFragmentBinding.bind(view)
+
+        binding.retry.setOnClickListener { pagingAdapter.retry() }
+        initAdapter()
+        subscribeUI()
+
+    }
+
+    private fun subscribeUI() {
+        viewModel.membersStream.observe(viewLifecycleOwner) {
+            pagingAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
+    }
+
+    private fun initAdapter() {
+        /**
+         * MyAdapter adapter1 = ...;
+         * AnotherAdapter adapter2 = ...;
+         * ConcatAdapter concatenated = new ConcatAdapter(adapter1, adapter2);
+         * recyclerView.setAdapter(concatenated);
+         */
+        binding.membersRecyclerView.adapter = pagingAdapter.withLoadStateHeaderAndFooter(
+            header = LoadStateAdapter { pagingAdapter.retry() },
+            footer = LoadStateAdapter { pagingAdapter.retry() }
+        )
+
+        // This callback notifies us every time there's a change in the load state via a CombinedLoadStates object.
+        // CombinedLoadStates gives us the load state for the PageSource
+        // Or it gives us the load state for RemoteMediator needed for network and database case
+        pagingAdapter.addLoadStateListener { loadState ->
+            // Only show the list if refresh succeeds.
+            binding.membersRecyclerView.isVisible =
+                loadState.source.refresh is LoadState.NotLoading // Not Loading and Not Error -> Success
+            // Show loading spinner during initial load or refresh.
+            binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+            // Show the retry state if initial load or refresh fails.
+            binding.retry.isVisible = loadState.source.refresh is LoadState.Error
+
+            // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
+            val errorState = loadState.source.append as? LoadState.Error
+                ?: loadState.source.prepend as? LoadState.Error
+                ?: loadState.append as? LoadState.Error
+                ?: loadState.prepend as? LoadState.Error
+            errorState?.let {
+                Toast.makeText(
+                    requireContext(),
+                    "\uD83D\uDE28 Wooops ${it.error}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
-
-        initRecyclerView()
-        subscribeUi()
-
     }
 
-    private fun initRecyclerView() {
-        adapter = MemberListAdapter(dataBindingComponent = dataBindingComponent) {}
-        binding.membersRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.membersRecyclerView.adapter = adapter
-        binding.membersRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            var isScrolling = true
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                val lastPosition = layoutManager.findLastVisibleItemPosition()
-                if (lastPosition == adapter.itemCount - 1
-                    && viewModel.membersListLiveData.value?.status != Status.LOADING
-                ) {
-                    viewModel.membersListLiveData.value?.let {
-                        if (!it.isLastPage && isScrolling) {
-                            viewModel.loadMore()
-                            isScrolling = false
-                        }
-                    }
-                }
-            }
-
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                    isScrolling = true
-                }
-            }
-        })
-    }
-
-    private fun subscribeUi() {
-        viewModel.membersListLiveData.observe(viewLifecycleOwner, { result ->
-            if (result.status == Status.SUCCESS && !result.data.isNullOrEmpty()) {
-                adapter.submitList(result.data)
-            }
-        })
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

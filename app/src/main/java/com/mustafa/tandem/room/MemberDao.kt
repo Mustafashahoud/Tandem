@@ -1,5 +1,6 @@
 package com.mustafa.tandem.room
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -9,21 +10,13 @@ import kotlin.math.abs
 
 
 @Dao
-abstract class MemberDao {
-
-    @Query("SELECT * FROM Member WHERE page in (:pages) order by page")
-    abstract suspend fun loadMembersByPages(pages: List<Int>): List<Member>
-
+interface  MemberDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insertMemberList(members: List<Member>)
+     suspend fun insertAll(members: List<Member>)
 
-    fun hashPrimary(firstName: String, refCnt: Int, page: Int, picUrl: String): Int {
-        var hash = 7
-        hash = 31 * hash + refCnt
-        hash = 31 * hash + page
-        hash = 31 * hash + firstName.hashCode()
-        hash = 31 * hash + picUrl.hashCode()
-        return abs(hash)
+    @Query("SELECT * FROM members ORDER BY id ASC ")
+     fun queryMembers(): PagingSource<Int, Member>
 
-    }
+    @Query("DELETE FROM members")
+     suspend fun clearMembers()
 }

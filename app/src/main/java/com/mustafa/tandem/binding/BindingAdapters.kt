@@ -4,11 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
-import com.mustafa.tandem.model.Member
-import com.mustafa.tandem.model.Resource
-import com.mustafa.tandem.model.Status
+import com.bumptech.glide.Glide
 import java.util.*
 
 /**
@@ -17,28 +13,12 @@ import java.util.*
 object BindingAdapters {
 
     @JvmStatic
-    @BindingAdapter("showHideRetry")
-    fun showHideRetry(view: View, resource: Resource<List<Member>>?) {
-        resource?.let {
-            view.visibility = if (resource.status == Status.ERROR) View.VISIBLE else View.GONE
-        }
-    }
-
-    @JvmStatic
-    @BindingAdapter("showHideProgressbar")
-    fun showHideProgressbar(view: View, resource: Resource<List<Member>>?) {
-        resource?.let {
-            view.visibility = if (resource.status == Status.LOADING) View.VISIBLE else View.GONE
-        }
-    }
-
-    @JvmStatic
-    @BindingAdapter("snackBar")
-    fun bindSnackBar(recyclerView: RecyclerView, resource: Resource<List<Member>>?) {
-        resource?.let {
-            if (resource.status == Status.ERROR) {
-                Snackbar.make(recyclerView, resource.message!!, Snackbar.LENGTH_LONG).show()
-            }
+    @BindingAdapter("imageUrl")
+    fun bindImage(imageView: ImageView, url: String?) {
+        url?.let {
+            Glide.with(imageView.context)
+                .load(it)
+                .into(imageView)
         }
     }
 
