@@ -547,7 +547,7 @@ val membersLiveData = pageLiveData.switchMap { pageNumber ->
     }
 ```
 
-* ## Proposed Improvements:
+* ## Proposed Improvments:
 
 - If I had to create a real production App, I would have cashed the data using Room following "single source of truth pattern".
 - Using the Paging Library, The idea is when building production apps we would want to query the whole data (old data and new queried data) each time
