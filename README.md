@@ -5,6 +5,13 @@
 * Reactive UIs using LiveData observables and Data Binding.
 * It consists of one fragment which is fully tested by Espresso.
 
+### Branches
+|     Sample     | Description |
+| ------------- | ------------- |
+| [master](https://github.com/Mustafashahoud/Tandem/tree/master) | The base for the rest of the other branches. <br/>Uses Kotlin, Architecture Components, Coroutines + Flow, Dagger, Retrofit Data Binding, etc. |
+| [room-cache](https://github.com/Mustafashahoud/Tandem/tree/room-cache)| Same like master branch but it uses Room db for caching data implementing single source of truth|
+| [paging3-network-db-livedata](https://github.com/Mustafashahoud/Tandem/tree/paging3-network-db-livedata)| Added Paging3 library, It uses RemoteMediator with Room DAO + PagingSource as single source of truth|
+
 <p align="center">
 <img src="https://user-images.githubusercontent.com/33812602/96847522-946dd880-1453-11eb-869e-14ad576e2391.jpg" width="250" />
 </p>
@@ -546,7 +553,7 @@ val movieListLiveData = pageLiveData.switchMap { pageNumber ->
     }
 ```
 
-* ## Proposed Improvments:
+* ## Proposed Improvements:
 
 - If I had to create a real production App, I would have cashed the data using Room following "single source of truth pattern".
 - Using the Paging Library, The idea is when building production apps we would want to query the whole data (old data and new queried data) each time
