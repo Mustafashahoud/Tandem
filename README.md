@@ -5,12 +5,9 @@
 * Reactive UIs using LiveData observables and Data Binding.
 * It consists of one fragment which is fully tested by Espresso.
 
-### Branches
-|     Sample     | Description |
-| ------------- | ------------- |
-| [master](https://github.com/Mustafashahoud/Tandem/tree/master) | The base for the rest of the other branches. <br/>Uses Kotlin, Architecture Components, Coroutines + Flow, Dagger, Retrofit Data Binding, etc. |
-| [room-cache](https://github.com/Mustafashahoud/Tandem/tree/room-cache)| Same like master branch but it uses Room db for caching data implementing single source of truth|
-| [paging3-network-db-livedata](https://github.com/Mustafashahoud/Tandem/tree/paging3-network-db-livedata)| Added Paging3 library, It uses RemoteMediator with Room DAO + PagingSource as single source of truth|
+<p align="center">
+<img src="https://user-images.githubusercontent.com/33812602/96847522-946dd880-1453-11eb-869e-14ad576e2391.jpg" width="250" />
+</p>
 
 ## Libraries
 - 100% Kotlin
@@ -26,7 +23,9 @@
 ## MVVM (Model – View – ViewModel)
 is an architectural pattern in programming. The main task of the pattern is to separate presentation logic from business logic. The most important component in MVVM is the ViewModel, which behaves more like a model and less like a view. It is responsible for converting and delegating data objects to presentation logic that displays those objects to the user on the device screen.
 
-![MVVM](https://user-images.githubusercontent.com/33812602/96825222-e81afa80-1430-11eb-8cc2-1025bb568ef3.PNG)
+<p align="center">
+<img src="https://user-images.githubusercontent.com/33812602/96825222-e81afa80-1430-11eb-8cc2-1025bb568ef3.PNG"/>
+</p>
 
 ## MVVM Best Practice:
 * Avoid references to Views in ViewModels.
@@ -539,10 +538,10 @@ suspend fun getCommunityMembers(page: Int): LiveData<List<Member>> {
 Then in the ViewModel:
 
 ```
-val membersLiveData = pageLiveData.switchMap { pageNumber ->
+val movieListLiveData = pageLiveData.switchMap { pageNumber ->
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-            val members = repository.getCommunityMembers(pageNumber)
-            emitSource(members)
+            val movies = repository.getCommunityMembers(pageNumber)
+            emitSource(movies)
         }
     }
 ```
