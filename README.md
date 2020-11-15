@@ -5,6 +5,13 @@
 * Reactive UIs using LiveData observables and Data Binding.
 * It consists of one fragment which is fully tested by Espresso.
 
+### Branches
+|     Sample     | Description |
+| ------------- | ------------- |
+| [master](https://github.com/Mustafashahoud/Tandem/tree/master) | The base for the rest of the other branches. <br/>Uses Kotlin, Architecture Components, Coroutines + Flow, Dagger, Retrofit Data Binding, etc. |
+| [room-cache](https://github.com/Mustafashahoud/Tandem/tree/room-cache)| Same like master branch but it uses Room db for caching data implementing single source of truth|
+| [paging3-network-db-livedata](https://github.com/Mustafashahoud/Tandem/tree/room-cache)| Added Paging3 library, It uses RemoteMediator with Room DAO + PagingSource as single source of truth|
+
 ## Libraries
 - 100% Kotlin
 - MVVM Architecture
@@ -532,10 +539,10 @@ suspend fun getCommunityMembers(page: Int): LiveData<List<Member>> {
 Then in the ViewModel:
 
 ```
-val movieListLiveData = pageLiveData.switchMap { pageNumber ->
+val membersLiveData = pageLiveData.switchMap { pageNumber ->
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-            val movies = repository.getCommunityMembers(pageNumber)
-            emitSource(movies)
+            val members = repository.getCommunityMembers(pageNumber)
+            emitSource(members)
         }
     }
 ```
