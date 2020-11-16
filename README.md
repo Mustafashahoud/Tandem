@@ -5,6 +5,10 @@
 * Reactive UIs using LiveData observables and Data Binding.
 * It consists of one fragment which is fully tested by Espresso.
 
+<p align="center">
+<img src="https://user-images.githubusercontent.com/33812602/96847522-946dd880-1453-11eb-869e-14ad576e2391.jpg" width="250" />
+</p>
+
 ### Branches
 |     Sample     | Description |
 | ------------- | ------------- |
