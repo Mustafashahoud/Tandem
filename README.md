@@ -10,16 +10,21 @@
 | ------------- | ------------- |
 | [master](https://github.com/Mustafashahoud/Tandem/tree/master) | The base for the rest of the other branches. <br/>Uses Kotlin, Architecture Components, Coroutines + Flow, Dagger, Retrofit Data Binding, etc. |
 | [room-cache](https://github.com/Mustafashahoud/Tandem/tree/room-cache)| Same like master branch but it uses Room db for caching data implementing single source of truth|
-| [paging3-network-db-livedata](https://github.com/Mustafashahoud/Tandem/tree/paging3-network-db-livedata)| Added Paging3 library, It uses RemoteMediator with Room DAO + PagingSource as single source of truth|
+| [paging3-network-db-livedata](https://github.com/Mustafashahoud/Tandem/tree/paging3-network-db-livedata)| Added Paging3 library, It uses RemoteMediator with Room DAO + PagingSource as single source of truth, exposes data as LiveData|
+| [paging3-network-db-flow](https://github.com/Mustafashahoud/Tandem/tree/paging3-network-db-flow)| Added Paging3 library, It uses RemoteMediator with Room DAO + PagingSource as single source of truth, exposes data as Flow|
 
-<p align="center">
-<img src="https://user-images.githubusercontent.com/33812602/96847522-946dd880-1453-11eb-869e-14ad576e2391.jpg" width="250" />
-</p>
+## Paging 3
+* The interesting thing  about this repository is that it implements the [Paging 3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) Library that has so many features that simplified complicated process creating RecyclerView with paging.
+    - Loading small chunk of data that reduces usage of network bandwidth and system resources.
+    - Built-in support for error handling, including refresh and retry capabilities.
+    - Built-in separator, header, and footer support.
+    - Automatically requests the correct page when the user has scrolled to the end of the list.
+    - Ensures that multiple requests are not triggered at the same time.
 
 ## Libraries
 - 100% Kotlin
 - MVVM Architecture
-- Architecture Components (Lifecycle, LiveData, ViewModel, Navigation Component, DataBinding)
+- Architecture Components (Lifecycle, LiveData, ViewModel, Paging, Navigation Component, DataBinding)
 - [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) For handling concurrent tasks
 - [Dagger2](https://github.com/google/dagger) for dependency injection
 - [Retrofit2](https://github.com/square/retrofit) for REST API
@@ -30,9 +35,7 @@
 ## MVVM (Model – View – ViewModel)
 is an architectural pattern in programming. The main task of the pattern is to separate presentation logic from business logic. The most important component in MVVM is the ViewModel, which behaves more like a model and less like a view. It is responsible for converting and delegating data objects to presentation logic that displays those objects to the user on the device screen.
 
-<p align="center">
-<img src="https://user-images.githubusercontent.com/33812602/96825222-e81afa80-1430-11eb-8cc2-1025bb568ef3.PNG"/>
-</p>
+![MVVM](https://user-images.githubusercontent.com/33812602/96825222-e81afa80-1430-11eb-8cc2-1025bb568ef3.PNG)
 
 ## MVVM Best Practice:
 * Avoid references to Views in ViewModels.
@@ -545,10 +548,10 @@ suspend fun getCommunityMembers(page: Int): LiveData<List<Member>> {
 Then in the ViewModel:
 
 ```
-val movieListLiveData = pageLiveData.switchMap { pageNumber ->
+val membersLiveData = pageLiveData.switchMap { pageNumber ->
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-            val movies = repository.getCommunityMembers(pageNumber)
-            emitSource(movies)
+            val members = repository.getCommunityMembers(pageNumber)
+            emitSource(members)
         }
     }
 ```
