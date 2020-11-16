@@ -10,12 +10,21 @@
 | ------------- | ------------- |
 | [master](https://github.com/Mustafashahoud/Tandem/tree/master) | The base for the rest of the other branches. <br/>Uses Kotlin, Architecture Components, Coroutines + Flow, Dagger, Retrofit Data Binding, etc. |
 | [room-cache](https://github.com/Mustafashahoud/Tandem/tree/room-cache)| Same like master branch but it uses Room db for caching data implementing single source of truth|
-| [paging3-network-db-livedata](https://github.com/Mustafashahoud/Tandem/tree/paging3-network-db-livedata)| Added Paging3 library, It uses RemoteMediator with Room DAO + PagingSource as single source of truth|
+| [paging3-network-db-livedata](https://github.com/Mustafashahoud/Tandem/tree/paging3-network-db-livedata)| Added Paging3 library, It uses RemoteMediator with Room DAO + PagingSource as single source of truth, exposes data as LiveData|
+| [paging3-network-db-flow](https://github.com/Mustafashahoud/Tandem/tree/paging3-network-db-flow)| Added Paging3 library, It uses RemoteMediator with Room DAO + PagingSource as single source of truth, exposes data as Flow|
+
+## Paging 3
+* The interesting thing  about this repository is that it implements the [Paging 3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) Library that has so many features that simplified complicated process creating RecyclerView with paging.
+    - Loading small chunk of data that reduces usage of network bandwidth and system resources.
+    - Built-in support for error handling, including refresh and retry capabilities.
+    - Built-in separator, header, and footer support.
+    - Automatically requests the correct page when the user has scrolled to the end of the list.
+    - Ensures that multiple requests are not triggered at the same time.
 
 ## Libraries
 - 100% Kotlin
 - MVVM Architecture
-- Architecture Components (Lifecycle, LiveData, ViewModel, Navigation Component, DataBinding)
+- Architecture Components (Lifecycle, LiveData, ViewModel, Paging, Navigation Component, DataBinding)
 - [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) For handling concurrent tasks
 - [Dagger2](https://github.com/google/dagger) for dependency injection
 - [Retrofit2](https://github.com/square/retrofit) for REST API
@@ -547,7 +556,7 @@ val membersLiveData = pageLiveData.switchMap { pageNumber ->
     }
 ```
 
-* ## Proposed Improvments:
+* ## Proposed Improvements:
 
 - If I had to create a real production App, I would have cashed the data using Room following "single source of truth pattern".
 - Using the Paging Library, The idea is when building production apps we would want to query the whole data (old data and new queried data) each time
