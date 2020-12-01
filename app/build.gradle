@@ -159,6 +159,9 @@ dependencies {
     implementation "com.github.florent37:glidepalette:$glidePaletteVersion"
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
 
+    //Leak canary: LeakCanary is a memory leak detection library for Android.
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
+
 
     // unit test
     testImplementation "junit:junit:$junitVersion"
