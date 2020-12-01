@@ -28,11 +28,12 @@
 ## Libraries
 - 100% Kotlin
 - MVVM Architecture
-- Architecture Components (Lifecycle, LiveData, ViewModel, Paging, Navigation Component, DataBinding)
+- Architecture Components (Lifecycle, LiveData, ViewModel, Paging, Navigation Component, DataBinding, Room)
 - [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) For handling concurrent tasks
 - [Dagger2](https://github.com/google/dagger) for dependency injection
 - [Retrofit2](https://github.com/square/retrofit) for REST API
 - [Glide](https://github.com/bumptech/glide) for loading images
+- [LeakCanary](https://square.github.io/leakcanary/) for detecting memory leak
 - [Mockito-kotlin](https://github.com/nhaarman/mockito-kotlin) for Junit mock test
 - [Espresso](https://developer.android.com/training/testing/espresso) for UI testing
 
