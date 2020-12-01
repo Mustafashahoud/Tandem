@@ -24,6 +24,7 @@ class CommunityFragment : Fragment(R.layout.community_fragment), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    // or private var binding by autCleared<CommunityFragmentBinding>()
     private var _binding: CommunityFragmentBinding? = null
     private val binding get() = _binding!!
 
