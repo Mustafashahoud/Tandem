@@ -1,7 +1,6 @@
 package com.mustafa.tandem.api
 
 import com.mustafa.tandem.model.CommunityResponse
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 

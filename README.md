@@ -431,7 +431,7 @@ Finally, I just need to add @OpenForTesting for the classes I need to be open in
         }
     }
 ```
-* Then for testing the UI we just need to post valus to he liveData and assert the views for example:
+* Then for testing the UI we just need to post values to he liveData and assert the views for example:
 
 ```
     @Test
@@ -556,7 +556,7 @@ val membersLiveData = pageLiveData.switchMap { pageNumber ->
     }
 ```
 
-* ## Proposed Improvments:
+* ## Proposed Improvements:
 
 - If I had to create a real production App, I would have cashed the data using Room following "single source of truth pattern".
 - Using the Paging Library, The idea is when building production apps we would want to query the whole data (old data and new queried data) each time
