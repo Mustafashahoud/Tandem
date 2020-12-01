@@ -12,6 +12,7 @@ import androidx.paging.LoadState
 import com.mustafa.tandem.R
 import com.mustafa.tandem.databinding.CommunityFragmentBinding
 import com.mustafa.tandem.di.Injectable
+import com.mustafa.tandem.util.autoCleared
 import com.mustafa.tandem.view.adapter.LoadStateAdapter
 import com.mustafa.tandem.view.adapter.MembersAdapter
 import kotlinx.coroutines.flow.collectLatest
@@ -26,7 +27,7 @@ class CommunityFragment : Fragment(R.layout.community_fragment), Injectable {
     private var _binding: CommunityFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private var pagingAdapter = MembersAdapter()
+    private var pagingAdapter by autoCleared<MembersAdapter>()
 
     private val viewModel by viewModels<CommunityViewModel> { viewModelFactory }
 
@@ -55,6 +56,7 @@ class CommunityFragment : Fragment(R.layout.community_fragment), Injectable {
          * ConcatAdapter concatenated = new ConcatAdapter(adapter1, adapter2);
          * recyclerView.setAdapter(concatenated);
          */
+        pagingAdapter = MembersAdapter()
         binding.membersRecyclerView.adapter = pagingAdapter.withLoadStateHeaderAndFooter(
             header = LoadStateAdapter { pagingAdapter.retry() },
             footer = LoadStateAdapter { pagingAdapter.retry() }
